@@ -1,0 +1,73 @@
+function sleep(delay = 0) {
+	return new Promise((resolve) => {
+		setTimeout(resolve, delay);
+	});
+}
+
+const [open, setOpen] = React.useState(false);
+	const [options, setOptions] = React.useState([]);
+
+	const loading = open && options.length === 0;
+
+	const onChangeHandle = async (value) => {
+		// this default api does not support searching but if you use google maps or some other use the value and post to get back you reslut and then set it using setOptions
+		console.log(value);
+		const url = `/api/places/geocode?address=${encodeURIComponent(
+			value || 'Vishalnagar,Visnagar'
+		)}&itemCount=${encodeURIComponent(10)}`;
+
+		const response = await fetch(url, {
+			headers: {
+				Authorization: `Bearer ${'8d8be377-8cc2-4e9c-a75d-3510e7e8ee8b'}`,
+				'Content-type': 'application/json',
+				Accept: 'application/json',
+			},
+			responseType: 'json',
+		});
+
+		const countries = await response.json();
+		setOptions(Object.keys(countries['copResults'] || []).map((key) => countries['copResults'][key]));
+	};
+
+	React.useEffect(() => {
+		if (!open) {
+			setOptions([]);
+		}
+	}, [open]);
+<Autocomplete
+				id="asynchronous-demo"
+				style={{ width: 300 }}
+				open={open}
+				onOpen={() => {
+					setOpen(true);
+				}}
+				onClose={() => {
+					setOpen(false);
+				}}
+				getOptionSelected={(option, value) => console.log(value.eLoc)}
+				getOptionLabel={(option) => option.formattedAddress}
+				options={options}
+				loading={loading}
+				renderInput={(params) => (
+					<TextField
+						{...params}
+						label="Asynchronous"
+						variant="outlined"
+						onChange={(ev) => {
+							// dont fire API if the user delete or not entered anything
+							if (ev.target.value !== '' || ev.target.value !== null) {
+								onChangeHandle(ev.target.value);
+							}
+						}}
+						InputProps={{
+							...params.InputProps,
+							endAdornment: (
+								<React.Fragment>
+									{loading ? <CircularProgress color="inherit" size={20} /> : null}
+									{params.InputProps.endAdornment}
+								</React.Fragment>
+							),
+						}}
+					/>
+				)}
+			/>

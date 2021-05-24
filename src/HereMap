@@ -1,0 +1,74 @@
+import HPlatform, { HMap, HMapRoute, HMapGeoCode, HMapMarker, HMapPolyLine } from 'react-here-map';
+import React, { useEffect, useState } from 'react';
+
+var routeParams = {
+	// The routing mode:
+	mode: 'fastest;car',
+	// The start point of the route:
+	waypoint0: 'geo!23.7024,72.5426',
+	// The end point of the route:
+	waypoint1: 'geo!23.0225,72.5714',
+	// To retrieve the shape of the route we choose the route
+	// representation mode 'display'
+	representation: 'display',
+};
+const routeLineOptions = {
+	style: { strokeColor: 'red', lineWidth: 20 },
+	arrows: { fillColor: 'white', frequency: 2, width: 0.8, length: 0.7 },
+};
+
+const icon =
+	'<svg width="24" height="24" ' +
+	'xmlns="http://www.w3.org/2000/svg">' +
+	'<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+	'height="22" /><text x="12" y="18" font-size="12pt" ' +
+	'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+	'fill="white">H</text></svg>';
+
+export default function Here({ map, platform, ui, route, key, routeShape }) {
+	return (
+		<React.Fragment>
+			<HPlatform
+				app_id="nHHpOaYfzZhZ7u7h9F4v"
+				app_code="g-f47l4RXwRO1M7OEI2AW7d0sN9W2-xEvDkVnoYeir4"
+				apikey={'g-f47l4RXwRO1M7OEI2AW7d0sN9W2-xEvDkVnoYeir4'}
+				useCIT
+				useHTTPS
+				interactive
+				includeUI
+				includePlaces
+			>
+				<HMap
+					style={{
+						height: '97vh',
+						width: '100vw',
+					}}
+					mapOptions={{ center: { lat: 23.0225, lng: 72.5714 }, zoom: 15 }}
+					useEvents // Required for events
+				>
+					<HMapRoute routeParams={routeParams} icon={icon} defaultDisplay lineOptions={routeLineOptions}>
+						<RouteMarker />
+					</HMapRoute>
+				</HMap>
+			</HPlatform>
+		</React.Fragment>
+	);
+}
+const RouteMarker = ({ map, platform, ui, route, key, routeShape }) => {
+	// Retrieve the mapped positions of the requested waypoints:
+	const startPoint = { latitude: 23.7024, longitude: 72.5426 };
+	const endPoint = { latitude: 23.0225, longitude: 72.5714 };
+
+	// Create a marker for the start point:
+	const startMarker = { lat: startPoint.latitude, lng: startPoint.longitude };
+	// Create a marker for the end point:
+	const endMarker = { lat: endPoint.latitude, lng: endPoint.longitude };
+
+	return (
+		<React.Fragment>
+			<HMapPolyLine points={routeShape} map={map} setViewBounds />
+			<HMapMarker coords={startMarker} map={map} platform={platform} icon={icon} setViewBounds />
+			<HMapMarker coords={endMarker} map={map} platform={platform} icon={icon} setViewBounds={false} />
+		</React.Fragment>
+	);
+};
