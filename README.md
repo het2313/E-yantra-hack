@@ -1,3 +1,4 @@
+
 <img align="left" src="https://user-images.githubusercontent.com/76579213/119385390-af534480-bce3-11eb-843c-0100fb13ea90.png" height="50" alt="react icon"/>
 <img align="left" src="https://user-images.githubusercontent.com/76579213/119385402-b24e3500-bce3-11eb-82e5-5bf08f2adbc5.png" height="50"/>
 <h2>Jivani - The Uber For Ambulance</h2>
@@ -10,7 +11,11 @@ Check live demonstration <a target="_blank" href="https://jivni-public.netlify.a
 <h3>:eye_speech_bubble: Live demo of Ambulance site</h3>
 Check live demonstration <a target="_blank" href="https://jivni-ambulance.netlify.app/"><strong>here</strong></a>
 
-![](flowchart.svg)
+
+<br/><br/><br/><br/>
+
+
+![](flowchart.png)
 
 
 <h3>:books: Getting started</h3>
