@@ -11,7 +11,7 @@ Check live demonstration <a target="_blank" href="https://jivni-public.netlify.a
 <h3>:eye_speech_bubble: Live demo of Ambulance site</h3>
 Check live demonstration <a target="_blank" href="https://jivni-ambulance.netlify.app/"><strong>here</strong></a>
 
-![](flowchart.svg)
+![](flowchart.png)
 
 
 <h3>:books: Getting started</h3>
